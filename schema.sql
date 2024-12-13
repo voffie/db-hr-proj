@@ -11,3 +11,10 @@ CREATE TABLE country
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL
 );
+
+INSERT INTO country(name)
+VALUES('Svergie'),
+      ('Danmarl'),
+      ('Frankrike');
+
+SELECT * FROM country;
