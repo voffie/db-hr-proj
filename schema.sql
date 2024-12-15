@@ -13,8 +13,8 @@ CREATE TABLE country
 );
 
 INSERT INTO country(name)
-VALUES('Svergie'),
-      ('Danmarl'),
-      ('Frankrike');
+VALUES('Sweden'),
+      ('Denmark'),
+      ('France');
 
 SELECT * FROM country;

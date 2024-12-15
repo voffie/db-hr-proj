@@ -3,8 +3,11 @@ package se.iths.repository;
 import static se.iths.JPAUtil.*;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import se.iths.JPAUtil;
 import se.iths.entity.Country;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -20,7 +23,9 @@ public class CountryRepository {
             return Optional.empty();
         }
     }
-
-
+    public List<Country> findAllCountries() {
+        EntityManager em = getEntityManager();
+        return em.createQuery("FROM Country ", Country.class).getResultList();
+    }
 
 }
