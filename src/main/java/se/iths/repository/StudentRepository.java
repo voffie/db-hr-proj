@@ -29,24 +29,39 @@ public class StudentRepository {
             }
         }
 
-    public List<Student> findByCourse(Course course) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.createQuery("SELECT s FROM Student s WHERE s.course = :course", Student.class)
-                    .setParameter("course", course)
-                    .getResultList();
-        } catch (RuntimeException e) {
-            return new ArrayList<>();
-        }
-    }
-
-    public boolean remove(Student student) {
+        public List<Student> findByCourse(Course course) {
             EntityManager em = getEntityManager();
             try {
-                em.remove(student);
-                return true;
+                return em.createQuery("SELECT s FROM Student s WHERE s.course = :course", Student.class)
+                    .setParameter("course", course)
+                    .getResultList();
             } catch (RuntimeException e) {
-                return false;
+                return new ArrayList<>();
             }
         }
-    }
+
+        public List<Object[]> getStudentCountByCountryAndCourse() {
+            EntityManager em = getEntityManager();
+            try {
+                return em.createQuery(
+                            "SELECT s.country.name, s.course.name, COUNT(s) " +
+                                    "FROM Student s " +
+                                    "GROUP BY s.country.name, s.course.name " +
+                                    "ORDER BY s.country.name, s.course.name",
+                            Object[].class)
+                    .getResultList();
+            } catch (RuntimeException e) {
+                return new ArrayList<>();
+            }
+        }
+
+    public boolean remove(Student student) {
+                EntityManager em = getEntityManager();
+                try {
+                    em.remove(student);
+                    return true;
+                } catch (RuntimeException e) {
+                    return false;
+                }
+            }
+        }
