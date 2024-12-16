@@ -2,7 +2,7 @@ package se.iths;
 
 import jakarta.persistence.EntityManager;
 import se.iths.repository.CountryRepository;
-import se.iths.entity.Country;
+
 import static se.iths.JPAUtil.getEntityManager;
 
 public class Main {
@@ -10,10 +10,14 @@ public class Main {
         EntityManager em = getEntityManager();
         CountryRepository repo = new CountryRepository();
         Countries countries = new Countries();
-        System.out.println(repo.findAllCountries());
-        System.out.println(repo.findCountryWithName("Sweden"));
-        countries.addCountry("Test");
-        System.out.println(repo.findAllCountries());
-
+        System.out.println(repo.findAll());
+        System.out.println(repo.findWithName("Sweden"));
+        countries.save("Test");
+        System.out.println(repo.findAll());
+        System.out.println("update test");
+        countries.update("Test", "Test1");
+        System.out.println(repo.findAll());
+        countries.delete("Test1");
+        System.out.println(repo.findAll());
     }
 }
