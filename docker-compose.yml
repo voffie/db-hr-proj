@@ -10,10 +10,11 @@ services:
       MYSQL_PASSWORD: password
       LANG: C.UTF-8
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
 volumes:
   mysql-data:
+
