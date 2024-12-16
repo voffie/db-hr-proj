@@ -25,7 +25,6 @@ public class Student {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    // Getter och Setter metoder
     public Integer getId() {
         return id;
     }
