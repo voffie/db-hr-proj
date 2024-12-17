@@ -15,7 +15,7 @@ public class EducatorRepository {
 
     public List<Educator> findAll() {
         EntityManager em = getEntityManager();
-        return em.createQuery("from Educator", Educator.class).getResultList();
+        return em.createQuery("SELECT e from Educator e", Educator.class).getResultList();
     }
 
     public Optional<Educator> findByName(String name) {
@@ -28,13 +28,24 @@ public class EducatorRepository {
         }
     }
 
-    public boolean remove(Educator educator) {
-        EntityManager em = getEntityManager();
-        try {
-            em.remove(educator);
-            return true;
-        } catch (RuntimeException e) {
-            return false;
-        }
+    public void update(int id, String newName, School newSchool) {
+        inTransaction(em -> {
+            Educator educator = em.find(Educator.class, id);
+            if (educator != null) {
+                educator.setName(newName);
+                educator.setSchool(newSchool);
+            } else {
+                throw new RuntimeException("Educator not found with ID: " + id);
+            }
+        });
+    }
+
+    public void delete(int id) {
+        inTransaction(em -> {
+            Educator educator = em.find(Educator.class, id);
+            if (educator != null) {
+                em.remove(educator);
+            }
+        });
     }
 }
