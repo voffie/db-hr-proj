@@ -48,24 +48,26 @@ public class CourseRepository {
             }
         });
     }
+
     public void addStudentToCourse(String id, Student student) {
         inTransaction(em -> {
-            // Fetch the course by its ID
+            // hämtar kurs genom id
             Course course = em.find(Course.class, id);
 
             if (course == null) {
                 throw new RuntimeException("Course not found with ID: " + id);
             }
 
-            // Check if the student is already enrolled in the course
+            // kollar om student är i klassen redan
             if (course.getStudents().contains(student)) {
                 throw new RuntimeException("Student is already enrolled in the course.");
             }
 
-            // Add the student to the course's students list
+            // lägger till student i listan för kurs
             course.getStudents().add(student);
 
-            // Persist the changes
+            // kanske inte behövs
             em.merge(course);
         });
+    }
 }
