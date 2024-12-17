@@ -3,7 +3,7 @@ use db_proj;
 CREATE TABLE educator
 (
     id     INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name   VARCHAR(255) NOT NULL,
+    name   VARCHAR(255) NOT NULL UNIQUE,
     school INT,
     FOREIGN KEY (school) REFERENCES school (id)
 );
