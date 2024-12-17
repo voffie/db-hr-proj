@@ -8,6 +8,7 @@ import java.util.ArrayList;
 @Table(name = "educator", schema = "db_proj")
 public class Educator {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -20,10 +21,6 @@ public class Educator {
 
     @OneToMany(mappedBy = "educator", fetch = FetchType.LAZY)
     private List<Course> courses = new ArrayList();
-
-    public List<Course> getCourses() {
-        return courses;
-    }
 
     public Integer getId() {
         return id;
@@ -47,6 +44,10 @@ public class Educator {
 
     public void setSchool(School school) {
         this.school = school;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
     }
 
     @Override
