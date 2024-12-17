@@ -17,17 +17,24 @@ public class Course {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "educator_id", nullable = false)  // kolla FK
     private Educator educator;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "school_id", nullable = false)  // koilla fk
     private School school;
 
-    @OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
-    private List<Course> students = new ArrayList();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "course_student",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> students = new ArrayList<>();
 
-    // Getters and Setters
+//    @OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+//    private List<Course> students = new ArrayList<>(); vad för connection skulle det vara?
+
     public String getId() {
         return id;
     }
@@ -60,11 +67,16 @@ public class Course {
         this.school = school;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public String toString() {
-        return "Course { " +
-                "id = '" + id + '\'' +
-                ", name = '" + name + '\'' +
-                " }";
+        return "Course { id='" + id + "', name='" + name + "' }";
     }
 }

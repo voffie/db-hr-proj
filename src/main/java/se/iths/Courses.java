@@ -7,6 +7,7 @@ public class Courses {
     final CourseRepository courseRepo = new CourseRepository();
     final EducatorRepository educatorRepo = new EducatorRepository();
     final SchoolRepository schoolRepo = new SchoolRepository();
+//    final StudentRepository studentRepo = new StudentRepository();
 
     public void save(String id, String name, String educatorName, String schoolName) {
         if (id == null || id.isBlank()) {
@@ -19,6 +20,7 @@ public class Courses {
 
         Optional<Educator> educator = educatorRepo.findByName(educatorName);
         Optional<School> school = schoolRepo.findByName(schoolName);
+//        Optional<Student> student = studentRepo.findByName(studentName);
 
         if (educator.isPresent() && school.isPresent()) {
             Course course = new Course();
@@ -54,5 +56,13 @@ public class Courses {
 
     public void delete(String id) {
         courseRepo.delete(id);
+    }
+    public void addStudentToCourse(String courseId, String studentName) {
+        Optional<Student> student = studentRepo.findByName(studentName);
+        if (student.isPresent()) {
+            courseRepo.addStudentToCourse(courseId, student.get());
+        } else {
+            throw new IllegalArgumentException("Student not found");
+        }
     }
 }
