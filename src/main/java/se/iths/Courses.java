@@ -1,8 +1,10 @@
 package se.iths;
 
 import se.iths.entity.Course;
+import se.iths.entity.School;
 import se.iths.entity.Student;
 import se.iths.repository.CourseRepository;
+import se.iths.repository.SchoolRepository;
 import se.iths.repository.StudentRepository;
 
 import java.util.List;
@@ -14,7 +16,7 @@ public class Courses {
     final SchoolRepository schoolRepo = new SchoolRepository();
     final StudentRepository studentRepo = new StudentRepository();
 
-    public void save(String id, String name, String educatorName, String schoolName) {
+    public void save(String id, String name, String educatorName, String schoolId) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Course ID cannot be null or empty");
         }
@@ -24,7 +26,7 @@ public class Courses {
         }
 
         Optional<Educator> educator = educatorRepo.findByName(educatorName);
-        Optional<School> school = schoolRepo.findByName(schoolName);
+        Optional<School> school = schoolRepo.findById(schoolId);
 //        Optional<Student> student = studentRepo.findByName(studentName);
 
         if (educator.isPresent() && school.isPresent()) {
@@ -48,9 +50,9 @@ public class Courses {
         return courseRepo.findAll();
     }
 
-    public void update(String id, String newName, String newEducatorName, String newSchoolName) {
+    public void update(String id, String newName, String newEducatorName, String newSchoolId) {
         Optional<Educator> newEducator = educatorRepo.findByName(newEducatorName);
-        Optional<School> newSchool = schoolRepo.findByName(newSchoolName);
+        Optional<School> newSchool = schoolRepo.findById(newSchoolId);
 
         if (newEducator.isPresent() && newSchool.isPresent()) {
             courseRepo.update(id, newName, newEducator.get(), newSchool.get());
