@@ -14,30 +14,18 @@ import java.util.Optional;
 
     public class Students {
         final StudentRepository studentRepo = new StudentRepository();
-        final CourseRepository courseRepo = new CourseRepository();
-        final SchoolRepository schoolRepo = new SchoolRepository();
-        final CountryRepository countryRepo = new CountryRepository();
 
-        public void save(String name, String schoolId, String courseId, int countryId) {
+        public void save(String name) {
             if (name == null || name.isBlank()) {
                 throw new IllegalArgumentException("Name cannot be null or empty");
             }
-
-            Optional<School> school = schoolRepo.findById(schoolId);
-            Optional<Course> course = courseRepo.findById(courseId);
-            Optional<Country> country = countryRepo.findByName(name);
-
-            if (school.isPresent() && course.isPresent() && country.isPresent()) {
-                Student student = new Student();
-                student.setName(name);
-                student.setSchool(school.get());
-                student.setCourse(course.get());
-                student.setCountry(country.get());
-
-                studentRepo.save(student);
-            } else {
-                throw new IllegalArgumentException("Invalid school, course, or country");
+            if (studentRepo.findByName(name).isPresent()) {
+                throw new IllegalArgumentException("Student with name: " + name + " already exists");
             }
+            Student newStudent = new Student();
+            newStudent.setName(name);
+
+            studentRepo.save(newStudent);
         }
 
         public List<Student> findAll() {
@@ -50,9 +38,15 @@ import java.util.Optional;
         }
 
         public void update(String oldName, String newName) {
+            if (oldName == null || oldName.isBlank()) {
+                throw new IllegalArgumentException("Old name cannot be null or empty");
+            }
             if (newName == null || newName.isBlank()) {
                 throw new IllegalArgumentException("New name cannot be null or empty");
             }
+            studentRepo.findByName(oldName).ifPresent(student ->{
+                studentRepo.update(student.getName(), newName);
+            });
         }
 
         public void delete(String name) {
@@ -62,17 +56,6 @@ import java.util.Optional;
             if (studentRepo.findByName(name).isPresent()) {
                 Student student = studentRepo.findByName(name).get();
                 studentRepo.delete(student.getName());
-            }
-        }
-
-        public void addStudentToCourse(String studentName, String courseId) {
-            Optional<Student> student = studentRepo.findByName(studentName);
-            Optional<Course> course = courseRepo.findById(courseId);
-
-            if (student.isPresent() && course.isPresent()) {
-                studentRepo.addStudentToCourse(student.get(), course.get());
-            } else {
-                throw new IllegalArgumentException("Student or course not found");
             }
         }
     }
