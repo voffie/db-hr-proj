@@ -43,7 +43,7 @@ public class Educators {
         return educatorRepo.findAll();
     }
 
-    public void update(String oldName, String newName, School newSchool) {
+    public void update(String oldName, String newName, String newSchool) {
         if (oldName == null || oldName.isBlank()) {
             throw new IllegalArgumentException("Old name cannot be null or empty");
         }
@@ -52,8 +52,8 @@ public class Educators {
             throw new IllegalArgumentException("New name cannot be null or empty");
         }
 
-        if (newSchool == null) {
-            throw new IllegalArgumentException("New school cannot be null");
+        if (newSchool == null|| newSchool.isBlank()) {
+            throw new IllegalArgumentException("School name cannot be null or empty");
         }
 
         educatorRepo.findByName(oldName).ifPresent(educator -> {

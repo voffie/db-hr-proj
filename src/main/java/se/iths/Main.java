@@ -1,17 +1,12 @@
 package se.iths;
 
 import java.util.Scanner;
-import jakarta.persistence.EntityManager;
-import se.iths.repository.EducatorRepository;
-
-import static se.iths.JPAUtil.getEntityManager;
-
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
+        Countries countries = new Countries();
         Educators educators = new Educators();
 
 
@@ -27,9 +22,8 @@ public class Main {
                 case 0:
                     System.out.println("\nClosing program");
                     mainQuit = true;
-                    break;
-
-                case 1:
+                }
+                case 1 -> {
                     boolean countryQuit = false;
                     while (!countryQuit) {
                         System.out.println("\n Choose alternative for Country" +
@@ -42,17 +36,35 @@ public class Main {
                         scanner.nextLine();
                         switch (countryAction) {
                             //Create
-                            case 0:
-
-                                break;
+                            case 0 -> {
+                                System.out.print("Enter name of educator:");
+                                String saveCountry = scanner.nextLine();
+                                countries.save(saveCountry);
+                                }
                             //Read
-                            case 1:
-
-                                break;
+                            case 1 -> {
+                                System.out.println("Choose read alternative" +
+                                        "\n0 show all countries" +
+                                        "\n1 Search for an country");
+                                int countryReadAction = scanner.nextInt();
+                                scanner.nextLine();
+                                switch (countryReadAction) {
+                                    case 0 -> countries.findAll();
+                                    case 1 -> {
+                                        System.out.print("Enter name of country:");
+                                        String findCountry = scanner.nextLine();
+                                        educators.findByName(findCountry);
+                                    }
+                                }
+                            }
                             //Update
-                            case 2:
-
-                                break;
+                            case 2 -> {
+                                System.out.print("Enter old name of country:");
+                                String updateCountryOldName = scanner.nextLine();
+                                System.out.print("Enter new name of country: ");
+                                String updateCountryNewName = scanner.nextLine();
+                                countries.update(updateCountryOldName, updateCountryNewName);
+                            }
                             //Delete
                             case 3:
 
@@ -64,8 +76,8 @@ public class Main {
                                 break;
                         }
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     boolean shcoolQuit = false;
                     while (!shcoolQuit) {
                         System.out.println("\n Choose alternative for School" +

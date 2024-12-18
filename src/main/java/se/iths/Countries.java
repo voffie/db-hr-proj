@@ -21,7 +21,7 @@ public class Countries {
 
         repo.save(newCountry);
     }
-    public List<Country> findALl(){
+    public List<Country> findAll(){
         return repo.findAll();
     }
 
