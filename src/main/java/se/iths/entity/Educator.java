@@ -3,6 +3,7 @@ package se.iths.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "educator", schema = "db_proj")

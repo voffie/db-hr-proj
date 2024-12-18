@@ -4,6 +4,7 @@ import static se.iths.JPAUtil.*;
 
 import jakarta.persistence.EntityManager;
 import se.iths.entity.Educator;
+import se.iths.entity.School;
 
 import java.util.List;
 import java.util.Optional;

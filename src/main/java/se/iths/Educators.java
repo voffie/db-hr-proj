@@ -1,7 +1,9 @@
 package se.iths;
 
 import se.iths.entity.Educator;
+import se.iths.entity.School;
 import se.iths.repository.EducatorRepository;
+import se.iths.repository.SchoolRepository;
 
 import java.util.List;
 import java.util.Optional;

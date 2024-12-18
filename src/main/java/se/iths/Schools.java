@@ -55,27 +55,6 @@ public class Schools {
         schoolRepo.update(school);
     }
 
-    public void save(String id, String name, Country country) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("ID cannot be null or empty");
-        }
-
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
-        }
-
-        if (country == null) {
-            throw new IllegalArgumentException("Country cannot be null");
-        }
-
-        if (schoolRepo.findById(id).isPresent()) {
-            throw new IllegalArgumentException("School with ID " + id + " already exists");
-        }
-
-        School school = new School(id, name, country);
-        schoolRepo.save(school);
-    }
-
     public List<School> findAll() {
         return schoolRepo.findAll();
     }
