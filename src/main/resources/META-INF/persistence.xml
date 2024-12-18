@@ -5,6 +5,7 @@
     <persistence-unit name="jpa-hibernate-mysql">
 
         <class>se.iths.entity.Student</class>
+        <class>se.iths.entity.Course</class>
 
         <properties>
             <!-- Database connection settings -->

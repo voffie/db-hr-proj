@@ -2,6 +2,7 @@ package se.iths.repository;
 
 import static se.iths.JPAUtil.*;
 import jakarta.persistence.EntityManager;
+import se.iths.entity.Course;
 import se.iths.entity.Student;
 
 import java.util.ArrayList;

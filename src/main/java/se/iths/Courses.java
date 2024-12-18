@@ -1,5 +1,10 @@
 package se.iths;
 
+import se.iths.entity.Course;
+import se.iths.entity.Student;
+import se.iths.repository.CourseRepository;
+import se.iths.repository.StudentRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -7,7 +12,7 @@ public class Courses {
     final CourseRepository courseRepo = new CourseRepository();
     final EducatorRepository educatorRepo = new EducatorRepository();
     final SchoolRepository schoolRepo = new SchoolRepository();
-//    final StudentRepository studentRepo = new StudentRepository();
+    final StudentRepository studentRepo = new StudentRepository();
 
     public void save(String id, String name, String educatorName, String schoolName) {
         if (id == null || id.isBlank()) {

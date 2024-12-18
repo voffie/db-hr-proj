@@ -1,6 +1,8 @@
-package se.iths;
+package se.iths.repository;
 
 import jakarta.persistence.EntityManager;
+import se.iths.entity.Course;
+import se.iths.entity.Student;
 
 import java.util.List;
 import java.util.Optional;
