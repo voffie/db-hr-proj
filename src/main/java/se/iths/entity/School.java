@@ -1,15 +1,14 @@
 package se.iths.entity;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
 public class School {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, unique = true)
+    private String id; // Använd String för skol-ID
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -24,16 +23,17 @@ public class School {
     public School() {
     }
 
-    public School(String name, Country country) {
+    public School(String id, String name, Country country) {
+        this.id = id;
         this.name = name;
         this.country = country;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

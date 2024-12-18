@@ -1,15 +1,21 @@
 package se.iths;
 
 import se.iths.entity.School;
+import se.iths.entity.Country;
 
 public class Main {
     public static void main(String[] args) {
         Schools schools = new Schools();
 
+        // Lägg till länder
+        Country sweden = new Country("SE", "Sweden");
+        countries.save(sweden);
+        Countries countries = new Countries();
+
         // Skapa skolor
-        schools.save("Hogwarts");
-        schools.save("Beauxbatons");
-        schools.save("Durmstrang");
+        schools.save("Hogwarts", "Hogwarts School of Witchcraft and Wizardry", sweden);
+        schools.save("Beauxbatons", "Beauxbatons Academy of Magic", sweden);
+        schools.save("Durmstrang", "Durmstrang Institute", sweden);
 
         // Hämta och visa alla skolor
         System.out.println("Alla skolor:");
@@ -17,7 +23,7 @@ public class Main {
 
         // Uppdatera en skola
         System.out.println("\nUppdaterar Hogwarts...");
-        schools.update("Hogwarts", "Hogwarts School of Witchcraft and Wizardry");
+        schools.update("Hogwarts", "Hogwarts School of Witchcraft and Wizardry", sweden);
 
         // Visa uppdaterade skolor
         System.out.println("\nUppdaterade skolor:");

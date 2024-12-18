@@ -1,6 +1,7 @@
 package se.iths.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import se.iths.JPAUtil;
 import se.iths.entity.School;
 
@@ -9,42 +10,36 @@ import java.util.Optional;
 
 public class SchoolRepository {
 
-    public void save(School school) {
-        JPAUtil.inTransaction(entityManager -> entityManager.persist(school));
-    }
-
-    public Optional<School> findById(Long id) {
-        EntityManager em = JPAUtil.getEntityManager();
-        return Optional.ofNullable(em.find(School.class, id));
-    }
-
-    public Optional<School> findByName(String name) {
-        EntityManager em = JPAUtil.getEntityManager();
-        List<School> schools = em.createQuery("SELECT s FROM School s WHERE s.name = :name", School.class)
-                .setParameter("name", name)
-                .getResultList();
-        return schools.stream().findFirst();
-    }
-
     public List<School> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
-        return em.createQuery("SELECT s FROM School s", School.class).getResultList();
+        try {
+            TypedQuery<School> query = em.createQuery("SELECT s FROM School s", School.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
 
-    public void update(Long id, String newName) {
-        JPAUtil.inTransaction(entityManager -> {
-            School school = entityManager.find(School.class, id);
-            if (school != null) {
-                school.setName(newName);
-            }
-        });
+    public Optional<School> findById(String id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        School school = em.find(School.class, id);
+        em.close();
+        return Optional.ofNullable(school);
     }
 
-    public void delete(Long id) {
-        JPAUtil.inTransaction(entityManager -> {
-            School school = entityManager.find(School.class, id);
+    public void save(School school) {
+        JPAUtil.inTransaction(em -> em.persist(school));
+    }
+
+    public void update(School school) {
+        JPAUtil.inTransaction(em -> em.merge(school));
+    }
+
+    public void delete(String id) {
+        JPAUtil.inTransaction(em -> {
+            School school = em.find(School.class, id);
             if (school != null) {
-                entityManager.remove(school);
+                em.remove(school);
             }
         });
     }
