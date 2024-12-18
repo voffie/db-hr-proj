@@ -57,12 +57,9 @@ public class StudentRepository {
         }
 
     public boolean remove(Student student) {
-                EntityManager em = getEntityManager();
-                try {
-                    em.remove(student);
-                    return true;
-                } catch (RuntimeException e) {
-                    return false;
-                }
-            }
-        }
+        return false;
+    }
+
+    public void addStudentToCourse(Student student, Course course) {
+    }
+}
