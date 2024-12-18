@@ -25,7 +25,7 @@ import java.util.Optional;
 
             Optional<School> school = schoolRepo.findById(schoolId);
             Optional<Course> course = courseRepo.findById(courseId);
-            Optional<Country> country = countryRepo.findByName();
+            Optional<Country> country = countryRepo.findByName(name);
 
             if (school.isPresent() && course.isPresent() && country.isPresent()) {
                 Student student = new Student();
@@ -49,37 +49,24 @@ import java.util.Optional;
             return student.orElse(null);
         }
 
-        public void update(int studentId, String newName, String newSchoolId, String newCourseId, int newCountryId) {
+        public void update(String oldName, String newName) {
             if (newName == null || newName.isBlank()) {
                 throw new IllegalArgumentException("New name cannot be null or empty");
             }
+        }
 
-            Optional<School> newSchool = schoolRepo.findById(newSchoolId);
-            Optional<Course> newCourse = courseRepo.findById(newCourseId);
-            Optional<Country> newCountry = countryRepo.findById(newCountryId);
-
-            if (newSchool.isPresent() && newCourse.isPresent() && newCountry.isPresent()) {
-                studentRepo.findById(studentId).ifPresent(student -> {
-                    student.setName(newName);
-                    student.setSchool(newSchool.get());
-                    student.setCourse(newCourse.get());
-                    student.setCountry(newCountry.get());
-                    studentRepo.save(student);  // Uppdatera student i databasen
-                });
-            } else {
-                throw new IllegalArgumentException("Invalid school, course, or country");
+        public void delete(String name) {
+            if (name == null || name.isBlank()) {
+                throw new IllegalArgumentException("Name cannot be null or empty");
+            }
+            if (studentRepo.findByName(name).isPresent()) {
+                Student student = studentRepo.findByName(name).get();
+                studentRepo.delete(student.getName());
             }
         }
 
-
-        public void delete(int studentId) {
-            studentRepo.findById(studentId).ifPresent(student -> {
-                studentRepo.delete(studentId);
-            });
-        }
-
-        public void addStudentToCourse(int studentId, String courseId) {
-            Optional<Student> student = studentRepo.findById(studentId);
+        public void addStudentToCourse(String studentName, String courseId) {
+            Optional<Student> student = studentRepo.findByName(studentName);
             Optional<Course> course = courseRepo.findById(courseId);
 
             if (student.isPresent() && course.isPresent()) {

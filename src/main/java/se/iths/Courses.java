@@ -66,6 +66,7 @@ public class Courses {
     public void delete(String id) {
         courseRepo.delete(id);
     }
+
     public void addStudentToCourse(String courseId, String studentName) {
         Optional<Student> student = studentRepo.findByName(studentName);
         if (student.isPresent()) {
