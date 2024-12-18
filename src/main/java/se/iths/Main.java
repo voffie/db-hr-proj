@@ -8,18 +8,19 @@ public class Main {
     public static void main(String[] args) {
         Countries countries = new Countries();
         Educators educators = new Educators();
-
-
+        Students students = new Students();
+        Schools schools = new Schools();
+        Courses courses = new Courses();
 
         boolean mainQuit = false;
         mainMenu();
         while (!mainQuit) {
-            System.out.println("\nChoose 6 to show alternatives aging");
+            System.out.println("\nChoose 6 to show alternatives again");
             int mainMenuAction = scanner.nextInt();
             scanner.nextLine();
 
             switch (mainMenuAction) {
-                case 0:
+                case 0 -> {
                     System.out.println("\nClosing program");
                     mainQuit = true;
                 }
@@ -66,14 +67,16 @@ public class Main {
                                 countries.update(updateCountryOldName, updateCountryNewName);
                             }
                             //Delete
-                            case 3:
-
-                                break;
+                            case 3 -> {
+                                System.out.print("Enter name of country you want to delete:");
+                                String deleteCountry = scanner.nextLine();
+                                educators.delete(deleteCountry);
+                            }
                             //Return to main menu
-                            case 4:
+                            case 4 -> {
                                 countryQuit = true;
                                 mainMenu();
-                                break;
+                            }
                         }
                     }
                 }
@@ -90,30 +93,22 @@ public class Main {
                         scanner.nextLine();
                         switch (schoolAction) {
                             //Create
-                            case 0:
-
-                                break;
+                            case 0 -> {}
                             //Read
-                            case 1:
-
-                                break;
+                            case 1 -> {}
                             //Update
-                            case 2:
-
-                                break;
+                            case 2 -> {}
                             //Delete
-                            case 3:
-
-                                break;
+                            case 3 -> {}
                             //Return to main menu
-                            case 4:
+                            case 4 -> {
                                 shcoolQuit = true;
                                 mainMenu();
-                                break;
+                            }
                         }
                     }
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     boolean studentQuit = false;
                     while (!studentQuit) {
                         System.out.println("\n Choose alternative for Student" +
@@ -126,30 +121,22 @@ public class Main {
                         scanner.nextLine();
                         switch (studentAction) {
                             //Create
-                            case 0:
-
-                                break;
+                            case 0 -> {}
                             //Read
-                            case 1:
-
-                                break;
+                            case 1 -> {}
                             //Update
-                            case 2:
-
-                                break;
+                            case 2 -> {}
                             //Delete
-                            case 3:
-
-                                break;
+                            case 3 -> {}
                             //Return to main menu
-                            case 4:
+                            case 4 -> {
                                 studentQuit = true;
                                 mainMenu();
-                                break;
+                            }
                         }
                     }
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     boolean educatorQuit = false;
                     while (!educatorQuit) {
                         System.out.println("\n Choose alternative for Educator" +
@@ -162,33 +149,31 @@ public class Main {
                         scanner.nextLine();
                         switch (educatorAction) {
                             //Create
-                            case 0:
+                            case 0 -> {
                                 System.out.print("Enter name of educator:");
                                 String saveEducator = scanner.nextLine();
                                 System.out.print("Enter school the educator works at: ");
                                 String saveSchool = scanner.nextLine();
-                                educators.save(saveEducator,saveSchool);
-                                break;
+                                educators.save(saveEducator, saveSchool);
+                            }
                             //Read
-                            case 1:
+                            case 1 -> {
                                 System.out.println("Choose read alternative" +
                                         "\n0 show all educators" +
                                         "\n1 Search for an educator");
                                 int educatorReadAction = scanner.nextInt();
                                 scanner.nextLine();
-                                switch (educatorReadAction){
-                                    case 0:
-                                        educators.findAll();
-                                        break;
-                                    case 1:
+                                switch (educatorReadAction) {
+                                    case 0 -> educators.findAll();
+                                    case 1 -> {
                                         System.out.print("Enter name of educator:");
                                         String findEducator = scanner.nextLine();
                                         educators.findByName(findEducator);
-                                        break;
+                                    }
                                 }
-                                break;
+                            }
                             //Update
-                            case 2:
+                            case 2 -> {
                                 System.out.print("Enter old name of educator:");
                                 String updateEducatorOldName = scanner.nextLine();
                                 System.out.print("Enter new name of educator: ");
@@ -196,22 +181,22 @@ public class Main {
                                 System.out.print("Enter school the educator works at: ");
                                 String updateEducatorSchool = scanner.nextLine();
                                 educators.update(updateEducatorOldName, updateEducatorNewName, updateEducatorSchool);
-                                break;
+                            }
                             //Delete
-                            case 3:
+                            case 3 -> {
                                 System.out.print("Enter name of educator you want to delete:");
                                 String deleteEducator = scanner.nextLine();
                                 educators.delete(deleteEducator);
-                                break;
+                            }
                             //Return to main menu
-                            case 4:
+                            case 4 -> {
                                 educatorQuit = true;
                                 mainMenu();
-                                break;
+                            }
                         }
                     }
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     boolean courseQuit = false;
                     while (!courseQuit) {
                         System.out.println("\n Choose alternative for Course" +
@@ -225,31 +210,32 @@ public class Main {
                         scanner.nextLine();
                         switch (courseAction) {
                             //Create
-                            case 0:
-
-                                break;
+                            case 0 -> {
+                                System.out.print("Enter course code: ");
+                                String courseCode = scanner.nextLine();
+                                System.out.print("Enter name of course:");
+                                String courseName = scanner.nextLine();
+                                System.out.print("Enter educator for course: ");
+                                String courseEducator = scanner.nextLine();
+                                System.out.print("Enter school for course: ");
+                                String courseSchool = scanner.nextLine();
+                                courses.save(courseCode, courseName, courseEducator, courseSchool);
+                            }
                             //Read
-                            case 1:
-
-                                break;
+                            case 1 -> {}
                             //Update
-                            case 2:
-
-                                break;
+                            case 2 -> {}
                             //Delete
-                            case 3:
-
-                                break;
+                            case 3 -> {}
                             //Return to main menu
-                            case 4:
+                            case 4 -> {
                                 courseQuit = true;
                                 mainMenu();
-                                break;
+                            }
                         }
                     }
-                case 6:
-                    mainMenu();
-                    break;
+                }
+                case 6 -> mainMenu();
             }
         }
     }
