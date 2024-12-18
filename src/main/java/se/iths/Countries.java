@@ -3,6 +3,9 @@ package se.iths;
 import se.iths.entity.Country;
 import se.iths.repository.CountryRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 public class Countries {
     CountryRepository repo  = new CountryRepository();
 
@@ -10,7 +13,7 @@ public class Countries {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
-        if (repo.findWithName(name).isPresent()) {
+        if (repo.findByName(name).isPresent()) {
             throw new IllegalArgumentException("Country with name " + name + " already exists");
         }
         Country newCountry = new Country();
@@ -18,22 +21,33 @@ public class Countries {
 
         repo.save(newCountry);
     }
+    public List<Country> findALl(){
+        return repo.findAll();
+    }
+
+    public Country findByName(String name) {
+        Optional<Country> country = repo.findByName(name);
+        return country.orElse(null);
+
+    }
+
     public void update(String oldName, String newName) {
         if (oldName == null || oldName.isBlank()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
+            throw new IllegalArgumentException("Old name cannot be null or empty");
         }
-        if (repo.findWithName(oldName).isPresent()) {
-            Country country = repo.findWithName(oldName).get();
-            country.setName(newName);
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("New name cannot be null or empty");
+        }
+        repo.findByName(oldName).ifPresent(country ->{
             repo.update(country.getId(), newName);
-        }
+        });
     }
     public void delete(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
-        if (repo.findWithName(name).isPresent()) {
-            Country country = repo.findWithName(name).get();
+        if (repo.findByName(name).isPresent()) {
+            Country country = repo.findByName(name).get();
             repo.delete(country.getId());
         }
     }

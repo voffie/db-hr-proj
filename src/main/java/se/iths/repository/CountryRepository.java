@@ -22,7 +22,7 @@ public class CountryRepository {
         return em.createQuery("SELECT c FROM Country c ", Country.class).getResultList();
     }
     //Show specific country
-    public Optional<Country> findWithName(String name) {
+    public Optional<Country> findByName(String name) {
         EntityManager em = getEntityManager();
         try {
             return Optional.of(em.createQuery("SELECT c FROM Country c WHERE c.name = : name", Country.class)

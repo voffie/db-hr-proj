@@ -2,6 +2,9 @@ package se.iths.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "country", schema = "db_proj")
 
@@ -15,6 +18,8 @@ public class Country {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "county", fetch = FetchType.LAZY)
+    private List<School> schools = new ArrayList<>();
 
     public Integer getId() {
         return id;
