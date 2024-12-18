@@ -1,5 +1,8 @@
 package se.iths;
 
+import se.iths.entity.Course;
+import se.iths.repository.CourseRepository;
+
 import java.util.List;
 import java.util.Optional;
 
