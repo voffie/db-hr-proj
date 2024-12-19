@@ -54,7 +54,7 @@ public class Main {
                                     case 1 -> {
                                         System.out.print("Enter name of country:");
                                         String findCountry = scanner.nextLine();
-                                        educators.findByName(findCountry);
+                                        System.out.println(countries.findByName(findCountry));
                                     }
                                 }
                             }
@@ -70,7 +70,7 @@ public class Main {
                             case 3 -> {
                                 System.out.print("Enter name of country you want to delete:");
                                 String deleteCountry = scanner.nextLine();
-                                educators.delete(deleteCountry);
+                                countries.delete(deleteCountry);
                             }
                             //Return to main menu
                             case 4 -> {
@@ -81,14 +81,16 @@ public class Main {
                     }
                 }
                 case 2 -> {
-                    boolean shcoolQuit = false;
-                    while (!shcoolQuit) {
-                        System.out.println("\n Choose alternative for School" +
-                                "\n0  - Create" +
-                                "\n1  - Read" +
-                                "\n2  - Update" +
-                                "\n3  - Delete" +
-                                "\n4  - Return to main menu");
+                    boolean schoolQuit = false;
+                    while (!schoolQuit) {
+                        System.out.println("""
+                                 Choose alternative for School
+                                0  - Create
+                                1  - Read
+                                2  - Update
+                                3  - Delete
+                                4  - Return to main menu
+                                """);
                         int schoolAction = scanner.nextInt();
                         scanner.nextLine();
                         switch (schoolAction) {
@@ -102,7 +104,7 @@ public class Main {
                             case 3 -> {}
                             //Return to main menu
                             case 4 -> {
-                                shcoolQuit = true;
+                                schoolQuit = true;
                                 mainMenu();
                             }
                         }
