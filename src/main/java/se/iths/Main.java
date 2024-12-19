@@ -168,13 +168,56 @@ public class Main {
                         scanner.nextLine();
                         switch (studentAction) {
                             //Create
-                            case 0 -> {}
+                            case 0 -> {
+                                System.out.print("Enter student name: ");
+                                String studentName = scanner.nextLine();
+                                System.out.print("Enter school name: ");
+                                String studentSchool = scanner.nextLine();
+                                System.out.print("Enter course name: ");
+                                String studentCourse = scanner.nextLine();
+                                System.out.print("Enter country name: ");
+                                String studentCountry = scanner.nextLine();
+
+                                students.save(studentName, studentSchool, studentCourse, studentCountry);
+                                System.out.println("Student created successfully!");
+                            }
                             //Read
-                            case 1 -> {}
+                            case 1 -> {
+                                System.out.print("""
+                                        Choose read alternative:
+                                        0 - Show all students
+                                        1 - Search for a student
+                                        """);
+                                int studentReadAction = scanner.nextInt();
+                                scanner.nextLine();
+                                switch (studentReadAction) {
+                                    case 0 -> students.findAll();
+                                    case 1 -> {
+                                        System.out.print("Enter student name: ");
+                                        String studentName = scanner.nextLine();
+                                        students.findByName(studentName);
+                                    }
+                                }
+                            }
                             //Update
-                            case 2 -> {}
+                            case 2 -> {
+                                System.out.print("Enter name of student to update: ");
+                                String updateStudentName = scanner.nextLine();
+                                System.out.print("Enter new name of student: ");
+
+                                System.out.print("Enter new school name: ");
+                                String updateStudentSchool = scanner.nextLine();
+
+                                System.out.print("Enter new course name: ");
+                                String updateStudentCourse = scanner.nextLine();
+                                students.update(updateStudentName, updateStudentSchool, updateStudentCourse);
+                            }
                             //Delete
-                            case 3 -> {}
+                            case 3 -> {
+                                System.out.print("Enter name of student to delete: ");
+                                String deleteStudent = scanner.nextLine();
+                                students.delete(deleteStudent);
+                            }
                             //Return to main menu
                             case 4 -> {
                                 studentQuit = true;

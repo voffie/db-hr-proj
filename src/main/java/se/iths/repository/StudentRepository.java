@@ -2,8 +2,11 @@ package se.iths.repository;
 
 import static se.iths.JPAUtil.*;
 import jakarta.persistence.EntityManager;
+import se.iths.JPAUtil;
 import se.iths.entity.Course;
 import se.iths.entity.Student;
+import se.iths.statistics.StudentsPerCourse;
+import se.iths.statistics.StudentsPerSchool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,3 +83,4 @@ public class StudentRepository {
             }
         }
 }
+

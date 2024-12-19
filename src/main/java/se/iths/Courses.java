@@ -8,6 +8,7 @@ import se.iths.repository.CourseRepository;
 import se.iths.repository.EducatorRepository;
 import se.iths.repository.SchoolRepository;
 import se.iths.repository.StudentRepository;
+import se.iths.statistics.StudentsPerCourse;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,5 +75,9 @@ public class Courses {
         } else {
             throw new IllegalArgumentException("Student not found");
         }
+    }
+
+    public List<StudentsPerCourse> studentsPerCourse() {
+        return courseRepo.studentsPerCourse();
     }
 }
