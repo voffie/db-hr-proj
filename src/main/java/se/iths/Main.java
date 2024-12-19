@@ -1,5 +1,8 @@
 package se.iths;
 
+import se.iths.entity.Country;
+
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -95,13 +98,55 @@ public class Main {
                         scanner.nextLine();
                         switch (schoolAction) {
                             //Create
-                            case 0 -> {}
+                            case 0 -> {
+                                System.out.print("Enter school name: ");
+                                String schoolName = scanner.nextLine();
+                                System.out.print("Enter school country: ");
+                                String schoolCountry = scanner.nextLine();
+                                schools.save(schoolName, schoolCountry);
+                            }
                             //Read
-                            case 1 -> {}
+                            case 1 -> {
+                                System.out.print("""
+                                        0 - Show all schools
+                                        1 - Search for a school
+                                        """);
+                                int schoolReadAction = scanner.nextInt();
+                                scanner.nextLine();
+                                switch (schoolReadAction) {
+                                    case 0 -> schools.findAll();
+                                    case 1 -> {
+                                        System.out.print("Enter school name: ");
+                                        String schoolName = scanner.nextLine();
+                                        schools.findByName(schoolName);
+                                    }
+                                }
+                            }
                             //Update
-                            case 2 -> {}
+                            case 2 -> {
+                                System.out.print("Enter name of school to update: ");
+                                String schoolName = scanner.nextLine();
+                                System.out.print("Enter new school name: ");
+                                String updateSchoolName = scanner.nextLine();
+                                System.out.print("Enter new school country: ");
+                                String updateSchoolCountry = scanner.nextLine();
+
+                                Optional<Country> countryOptional = Optional.ofNullable(countries.findByName(updateSchoolCountry));
+                                if (countryOptional.isEmpty()) {
+                                    System.out.println("Country not found: " + updateSchoolCountry);
+                                    break;
+                                }
+
+                                Country newCountry = countryOptional.get();
+
+                                schools.update(schoolName, updateSchoolName, newCountry);
+                            }
                             //Delete
-                            case 3 -> {}
+                            case 3 -> {
+                                System.out.print("Enter name of school to delete: ");
+                                String deleteSchool = scanner.nextLine();
+                                schools.delete(deleteSchool);
+                            }
                             //Return to main menu
                             case 4 -> {
                                 schoolQuit = true;

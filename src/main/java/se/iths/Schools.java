@@ -55,10 +55,24 @@ public class Schools {
         schoolRepo.update(school);
     }
 
+    public void delete(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+
+        // Hämta skolan med det specifika namnet
+        School school = schoolRepo.findByName(name).orElseThrow(() ->
+            new IllegalArgumentException("School with name " + name + " does not exist"));
+
+        // Radera skolan
+        schoolRepo.delete(String.valueOf(school));
+    }
+
     public List<School> findAll() {
         return schoolRepo.findAll();
     }
 
-
-
+    public List<StudentsPerSchool> studentsPerSchool() {
+        return schoolRepo.studentsPerSchool();
+    }
 }
