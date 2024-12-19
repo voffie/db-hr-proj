@@ -21,6 +21,9 @@ public class Country {
     @OneToMany(mappedBy = "county", fetch = FetchType.LAZY)
     private List<School> schools = new ArrayList<>();
 
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    private List<Student> students = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }

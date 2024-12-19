@@ -51,4 +51,11 @@ public class Countries {
             repo.delete(country.getId());
         }
     }
+    public List<StudentsPerCountry> studentsPerCountry(){
+        return repo.studentsPerCountry();
+    }
+    public List<SchoolPerCountry> schoolsPerCountry(){
+        return repo.schoolPerCountry();
+    }
+
 }
