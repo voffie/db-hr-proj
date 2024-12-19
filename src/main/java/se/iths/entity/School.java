@@ -4,36 +4,29 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="school", schema = "db_proj")
 public class School {
 
     @Id
-    @Column(nullable = false, unique = true)
-    private String id; // Använd String för skol-ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
     private List<Educator> educators;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
 
-    public School() {
-    }
-
-    public School(String id, String name, Country country) {
-        this.id = id;
-        this.name = name;
-        this.country = country;
-    }
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

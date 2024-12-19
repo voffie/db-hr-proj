@@ -17,7 +17,7 @@ public class Educator {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "school_id", nullable = false)
     private School school;
 
     @OneToMany(mappedBy = "educator", fetch = FetchType.LAZY)

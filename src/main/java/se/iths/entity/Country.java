@@ -18,7 +18,7 @@ public class Country {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "county", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private List<School> schools = new ArrayList<>();
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)

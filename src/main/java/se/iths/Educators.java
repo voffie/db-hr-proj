@@ -27,7 +27,7 @@ public class Educators {
             throw new IllegalArgumentException("Educator with name " + name + " already exists");
         }
 
-        Optional<School> school = schoolRepo.findById(schoolName);
+        Optional<School> school = schoolRepo.findByName(schoolName);
         school.ifPresent(entry -> {
             Educator educator = new Educator();
             educator.setName(name);
@@ -58,15 +58,13 @@ public class Educators {
             throw new IllegalArgumentException("School name cannot be null or empty");
         }
 
-        Optional<School> school = schoolRepo.findById(newSchool);
+        Optional<School> school = schoolRepo.findByName(newSchool);
 
         if (school.isEmpty()) {
             throw new IllegalArgumentException("School not found");
         }
 
-        educatorRepo.findByName(oldName).ifPresent(educator -> {
-            educatorRepo.update(educator.getId(), newName, school.get());
-        });
+        educatorRepo.findByName(oldName).ifPresent(educator -> educatorRepo.update(educator.getId(), newName, school.get()));
     }
 
     public void delete(String name) {
@@ -74,9 +72,7 @@ public class Educators {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
 
-        educatorRepo.findByName(name).ifPresent(educator -> {
-            educatorRepo.delete(educator.getId());
-        });
+        educatorRepo.findByName(name).ifPresent(educator -> educatorRepo.delete(educator.getId()));
     }
 
     public List<CoursePerEducator> coursesPerEducator() {

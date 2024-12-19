@@ -2,6 +2,8 @@ package se.iths;
 
 import se.iths.entity.Country;
 import se.iths.repository.CountryRepository;
+import se.iths.statistics.SchoolPerCountry;
+import se.iths.statistics.StudentsPerCountry;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,9 +40,7 @@ public class Countries {
         if (newName == null || newName.isBlank()) {
             throw new IllegalArgumentException("New name cannot be null or empty");
         }
-        repo.findByName(oldName).ifPresent(country ->{
-            repo.update(country.getId(), newName);
-        });
+        repo.findByName(oldName).ifPresent(country -> repo.update(country.getId(), newName));
     }
     public void delete(String name) {
         if (name == null || name.isBlank()) {

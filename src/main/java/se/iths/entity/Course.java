@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "courses", schema = "db_proj")
+@Table(name = "course", schema = "db_proj")
 
 public class Course {
     @Id
@@ -17,23 +17,15 @@ public class Course {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "educator_id", nullable = false)  // kolla FK
+    @JoinColumn(name = "educator_id", nullable = false)
     private Educator educator;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "school_id", nullable = false)  // koilla fk
+    @JoinColumn(name = "school_id", nullable = false)
     private School school;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Student> students = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
-//    private List<Course> students = new ArrayList<>(); vad för connection skulle det vara?
 
     public String getId() {
         return id;

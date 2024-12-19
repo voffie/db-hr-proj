@@ -29,7 +29,7 @@ public class Courses {
         }
 
         Optional<Educator> educator = educatorRepo.findByName(educatorName);
-        Optional<School> school = schoolRepo.findById(schoolId);
+        Optional<School> school = schoolRepo.findByName(schoolId);
 //        Optional<Student> student = studentRepo.findByName(studentName);
 
         if (educator.isPresent() && school.isPresent()) {
@@ -55,7 +55,7 @@ public class Courses {
 
     public void update(String id, String newName, String newEducatorName, String newSchoolId) {
         Optional<Educator> newEducator = educatorRepo.findByName(newEducatorName);
-        Optional<School> newSchool = schoolRepo.findById(newSchoolId);
+        Optional<School> newSchool = schoolRepo.findByName(newSchoolId);
 
         if (newEducator.isPresent() && newSchool.isPresent()) {
             courseRepo.update(id, newName, newEducator.get(), newSchool.get());

@@ -1,10 +1,11 @@
 package se.iths.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import se.iths.JPAUtil;
 import se.iths.entity.School;
+import se.iths.statistics.StudentsPerSchool;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,19 +13,17 @@ public class SchoolRepository {
 
     public List<School> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
-        try {
-            TypedQuery<School> query = em.createQuery("SELECT s FROM School s", School.class);
-            return query.getResultList();
-        } finally {
-            em.close();
-        }
+        return em.createQuery("SELECT s FROM School s", School.class).getResultList();
     }
 
-    public Optional<School> findById(String id) {
+    public Optional<School> findByName(String name) {
         EntityManager em = JPAUtil.getEntityManager();
-        School school = em.find(School.class, id);
-        em.close();
-        return Optional.ofNullable(school);
+        try {
+            return Optional.of(em.createQuery("SELECT s FROM School s WHERE s.name = :name", School.class)
+                    .setParameter("name", name).getSingleResult());
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
     }
 
     public void save(School school) {
@@ -42,5 +41,17 @@ public class SchoolRepository {
                 em.remove(school);
             }
         });
+    }
+
+    public List<StudentsPerSchool> studentsPerSchool() {
+        List<StudentsPerSchool> output = new ArrayList<>();
+        JPAUtil.inTransaction(entityManager -> {
+            output.addAll(entityManager.createQuery("SELECT new se.iths.statistics.StudentsPerSchool(s.name, COUNT(st.id)) " +
+                    "FROM School s " +
+                    "INNER JOIN Student st on s.id = st.school.id " +
+                    "GROUP BY s.name", StudentsPerSchool.class)
+                    .getResultList());
+        });
+        return output;
     }
 }

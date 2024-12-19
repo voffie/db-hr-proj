@@ -7,6 +7,7 @@ import se.iths.entity.Country;
 import se.iths.statistics.SchoolPerCountry;
 import se.iths.statistics.StudentsPerCountry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

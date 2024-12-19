@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
+    private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         Countries countries = new Countries();
@@ -30,12 +30,14 @@ public class Main {
                 case 1 -> {
                     boolean countryQuit = false;
                     while (!countryQuit) {
-                        System.out.println("\n Choose alternative for Country" +
-                                "\n0  - Create" +
-                                "\n1  - Read" +
-                                "\n2  - Update" +
-                                "\n3  - Delete" +
-                                "\n4  - Return to main menu");
+                        System.out.println("""
+                                 Choose alternative for Country
+                                0  - Create
+                                1  - Read
+                                2  - Update
+                                3  - Delete
+                                4  - Return to main menu
+                                """);
                         int countryAction = scanner.nextInt();
                         scanner.nextLine();
                         switch (countryAction) {
@@ -47,9 +49,11 @@ public class Main {
                                 }
                             //Read
                             case 1 -> {
-                                System.out.println("Choose read alternative" +
-                                        "\n0 show all countries" +
-                                        "\n1 Search for an country");
+                                System.out.println("""
+                                        Choose read alternative
+                                        0 show all countries
+                                        1 Search for an country
+                                        """);
                                 int countryReadAction = scanner.nextInt();
                                 scanner.nextLine();
                                 switch (countryReadAction) {
@@ -158,12 +162,14 @@ public class Main {
                 case 3 -> {
                     boolean studentQuit = false;
                     while (!studentQuit) {
-                        System.out.println("\n Choose alternative for Student" +
-                                "\n0  - Create" +
-                                "\n1  - Read" +
-                                "\n2  - Update" +
-                                "\n3  - Delete" +
-                                "\n4  - Return to main menu");
+                        System.out.println("""
+                                 Choose alternative for Student
+                                0  - Create
+                                1  - Read
+                                2  - Update
+                                3  - Delete
+                                4  - Return to main menu
+                                """);
                         int studentAction = scanner.nextInt();
                         scanner.nextLine();
                         switch (studentAction) {
@@ -229,12 +235,14 @@ public class Main {
                 case 4 -> {
                     boolean educatorQuit = false;
                     while (!educatorQuit) {
-                        System.out.println("\n Choose alternative for Educator" +
-                                "\n0  - Create" +
-                                "\n1  - Read" +
-                                "\n2  - Update" +
-                                "\n3  - Delete" +
-                                "\n4  - Return to main menu");
+                        System.out.println("""
+                                 Choose alternative for Educator
+                                0  - Create
+                                1  - Read
+                                2  - Update
+                                3  - Delete
+                                4  - Return to main menu
+                                """);
                         int educatorAction = scanner.nextInt();
                         scanner.nextLine();
                         switch (educatorAction) {
@@ -248,9 +256,11 @@ public class Main {
                             }
                             //Read
                             case 1 -> {
-                                System.out.println("Choose read alternative" +
-                                        "\n0 show all educators" +
-                                        "\n1 Search for an educator");
+                                System.out.println("""
+                                        Choose read alternative
+                                        0 show all educators
+                                        1 Search for an educator
+                                        """);
                                 int educatorReadAction = scanner.nextInt();
                                 scanner.nextLine();
                                 switch (educatorReadAction) {
@@ -258,7 +268,7 @@ public class Main {
                                     case 1 -> {
                                         System.out.print("Enter name of educator:");
                                         String findEducator = scanner.nextLine();
-                                        educators.findByName(findEducator);
+                                        System.out.println(educators.findByName(findEducator));
                                     }
                                 }
                             }
@@ -289,13 +299,14 @@ public class Main {
                 case 5 -> {
                     boolean courseQuit = false;
                     while (!courseQuit) {
-                        System.out.println("\n Choose alternative for Course" +
-                                "\n0  - Create" +
-                                "\n1  - Read" +
-                                "\n2  - Update" +
-                                "\n3  - Delete" +
-                                "\n4  - Return to main menu");
-
+                        System.out.println("""
+                                 Choose alternative for Course
+                                0  - Create
+                                1  - Read
+                                2  - Update
+                                3  - Delete
+                                4  - Return to main menu
+                                """);
                         int courseAction = scanner.nextInt();
                         scanner.nextLine();
                         switch (courseAction) {
@@ -362,19 +373,50 @@ public class Main {
                         }
                     }
                 }
-                case 6 -> mainMenu();
+                case 6 -> {
+                    boolean statisticsQuit = false;
+                    while (!statisticsQuit) {
+                        System.out.println("""
+                                 Choose alternative for Statistics
+                                0  - Students per school
+                                1  - Students per country
+                                2  - Students per course
+                                3  - Course per educator
+                                4  - School per country
+                                5  - Return to main menu
+                                """);
+                        int statisticsAction = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (statisticsAction) {
+                            case 0 -> schools.studentsPerSchool().forEach(System.out::println);
+                            case 1 -> countries.studentsPerCountry().forEach(System.out::println);
+                            case 2 -> courses.studentsPerCourse().forEach(System.out::println);
+                            case 3 -> educators.coursesPerEducator().forEach(System.out::println);
+                            case 4 -> countries.schoolsPerCountry().forEach(System.out::println);
+                            //Return to main menu
+                            case 5 -> {
+                                statisticsQuit = true;
+                                mainMenu();
+                            }
+                        }
+                    }
+                }
+                case 7 -> mainMenu();
             }
         }
     }
 
     private static void mainMenu() {
-        System.out.println("\nChoose:\n");
-        System.out.println("0  - Close\n" +
-                "1  - Country\n" +
-                "2  - School \n" +
-                "3  - Student\n" +
-                "4  - Educator \n" +
-                "5  - Course\n" +
-                "6  - Show alternatives againg.");
+        System.out.println("Choose:");
+        System.out.println("""
+                0  - Close
+                1  - Country
+                2  - School
+                3  - Student
+                4  - Educator
+                5  - Course
+                6  - Statistics
+                7  - Show alternatives again.
+                """);
     }
 }

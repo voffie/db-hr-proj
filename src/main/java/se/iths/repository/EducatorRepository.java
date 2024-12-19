@@ -19,7 +19,7 @@ public class EducatorRepository {
 
     public List<Educator> findAll() {
         EntityManager em = getEntityManager();
-        return em.createQuery("SELECT e from Educator e", Educator.class).getResultList();
+        return em.createQuery("SELECT e FROM Educator e", Educator.class).getResultList();
     }
 
     public Optional<Educator> findByName(String name) {
