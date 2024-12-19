@@ -215,20 +215,57 @@ public class Main {
                             case 0 -> {
                                 System.out.print("Enter course code: ");
                                 String courseCode = scanner.nextLine();
+
                                 System.out.print("Enter name of course:");
                                 String courseName = scanner.nextLine();
+
                                 System.out.print("Enter educator for course: ");
                                 String courseEducator = scanner.nextLine();
+
                                 System.out.print("Enter school for course: ");
                                 String courseSchool = scanner.nextLine();
                                 courses.save(courseCode, courseName, courseEducator, courseSchool);
                             }
                             //Read
-                            case 1 -> {}
+                            case 1 -> {
+                                System.out.print("""
+                                        Choose an alternative to view courses:
+                                        0 - Show all courses
+                                        1 - Search for a course
+                                        """);
+                                int readCourseAction = scanner.nextInt();
+                                scanner.nextLine();
+
+                                switch(readCourseAction){
+                                    case 0 -> courses.findAll();
+                                    case 1 -> {System.out.print("Enter course code: ");
+                                        String courseCode = scanner.nextLine();
+                                        System.out.print(courses.findById(courseCode));
+                                    }
+                                }
+                            }
                             //Update
-                            case 2 -> {}
+                            case 2 -> {
+                                System.out.print("Enter old course name: ");
+                                String updateOldCourseName = scanner.nextLine();
+
+                                System.out.print("Enter new course name: ");
+                                String updateNewCourseName = scanner.nextLine();
+
+                                System.out.print("Enter new educator name: ");
+                                String updateCourseEducator = scanner.nextLine();
+
+                                System.out.print("Enter new school name: ");
+                                String updateCourseSchool = scanner.nextLine();
+
+                                courses.update(updateOldCourseName, updateNewCourseName, updateCourseEducator, updateCourseSchool);
+                            }
                             //Delete
-                            case 3 -> {}
+                            case 3 -> {
+                                System.out.print("Enter the name of the course to delete: ");
+                                String deleteCourseName = scanner.nextLine();
+                                courses.delete(deleteCourseName);
+                            }
                             //Return to main menu
                             case 4 -> {
                                 courseQuit = true;

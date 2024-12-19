@@ -1,11 +1,14 @@
 package se.iths.repository;
 
 import jakarta.persistence.EntityManager;
+import se.iths.JPAUtil;
 import se.iths.entity.Course;
 import se.iths.entity.Educator;
 import se.iths.entity.School;
 import se.iths.entity.Student;
+import se.iths.statistics.StudentsPerCourse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,5 +76,17 @@ public class CourseRepository {
             // kanske inte behövs
             em.merge(course);
         });
+    }
+
+    public List<StudentsPerCourse> studentsPerCourse() {
+        List<StudentsPerCourse> output = new ArrayList<>();
+        JPAUtil.inTransaction(entityManager -> {
+            output.addAll(entityManager.createQuery("SELECT new se.iths.statistics.StudentsPerCourse(c.name, COUNT(st.id)) " +
+                            "FROM Course c " +
+                            "INNER JOIN Student st on c.id = st.course.id " +
+                            "GROUP BY c.name", StudentsPerCourse.class)
+                    .getResultList());
+        });
+        return output;
     }
 }

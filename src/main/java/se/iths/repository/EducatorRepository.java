@@ -3,9 +3,12 @@ package se.iths.repository;
 import static se.iths.JPAUtil.*;
 
 import jakarta.persistence.EntityManager;
+import se.iths.JPAUtil;
 import se.iths.entity.Educator;
 import se.iths.entity.School;
+import se.iths.statistics.CoursePerEducator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +51,17 @@ public class EducatorRepository {
                 em.remove(educator);
             }
         });
+    }
+
+    public List<CoursePerEducator> coursePerEducator() {
+        List<CoursePerEducator> output = new ArrayList<>();
+        JPAUtil.inTransaction(entityManager -> {
+            output.addAll(entityManager.createQuery("SELECT new se.iths.statistics.CoursePerEducator(e.name, COUNT(c.id)) " +
+                            "FROM Educator e " +
+                            "INNER JOIN Course c on e.id = c.educator.id " +
+                            "GROUP BY e.name", CoursePerEducator.class)
+                    .getResultList());
+        });
+        return output;
     }
 }

@@ -4,8 +4,10 @@ import se.iths.entity.Educator;
 import se.iths.entity.School;
 import se.iths.repository.EducatorRepository;
 import se.iths.repository.SchoolRepository;
+import se.iths.statistics.CoursePerEducator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Educators {
@@ -75,5 +77,9 @@ public class Educators {
         educatorRepo.findByName(name).ifPresent(educator -> {
             educatorRepo.delete(educator.getId());
         });
+    }
+
+    public List<CoursePerEducator> coursesPerEducator() {
+        return educatorRepo.coursePerEducator();
     }
 }
