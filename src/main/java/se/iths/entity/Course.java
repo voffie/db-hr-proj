@@ -69,6 +69,6 @@ public class Course {
 
     @Override
     public String toString() {
-        return "id = '" + id + "', name = '" + name + "', educator = '" + educator + "'";
+        return name + " (" + id +")";
     }
 }

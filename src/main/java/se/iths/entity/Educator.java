@@ -53,6 +53,6 @@ public class Educator {
 
     @Override
     public String toString() {
-        return "id = " + id + ", name = '" + name + "', school = '" + school + "'";
+        return name + " teaches at " + school;
     }
 }

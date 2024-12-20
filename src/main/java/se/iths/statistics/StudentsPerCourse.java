@@ -1,9 +1,9 @@
 package se.iths.statistics;
 
-public record StudentsPerCourse(String courseID, long students) {
+public record StudentsPerCourse(String courseName, long students) {
 
     @Override
     public String toString() {
-        return "Course ID = '" + courseID + "', Students = " + students;
+        return students + " students are enrolled in " + courseName;
     }
 }

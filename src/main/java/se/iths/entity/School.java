@@ -56,6 +56,6 @@ public class School {
 
     @Override
     public String toString() {
-        return "id = " + id + ", name = '" + name + ", country = " + country;
+        return name + ", " + country;
     }
 }
