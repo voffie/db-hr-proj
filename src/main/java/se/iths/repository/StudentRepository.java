@@ -2,11 +2,10 @@ package se.iths.repository;
 
 import static se.iths.JPAUtil.*;
 import jakarta.persistence.EntityManager;
-import se.iths.JPAUtil;
 import se.iths.entity.Course;
 import se.iths.entity.Student;
-import se.iths.statistics.StudentsPerCourse;
-import se.iths.statistics.StudentsPerSchool;
+import se.iths.entity.Country;
+import se.iths.entity.School;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +18,21 @@ public class StudentRepository {
         inTransaction(em -> em.persist(student));
     }
     //update student
-    public void update(String id, String newName) {
+    public void update(int id, String newName, School school, Course course, Country country) {
         inTransaction(em -> {
             Student student = em.find(Student.class, id);
             if (student != null) {
                 student.setName(newName);
+                student.setSchool(school);
+                student.setCourse(course);
+                student.setCountry(country);
             } else {
                 throw new RuntimeException("Student not found with ID: " + id);
             }
         });
     }
     //delete student
-    public void delete(String id) {
+    public void delete(int id) {
         inTransaction(em -> {
             Student student = em.find(Student.class, id);
             if (student != null) {

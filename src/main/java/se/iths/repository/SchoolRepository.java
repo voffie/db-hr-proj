@@ -34,7 +34,7 @@ public class SchoolRepository {
         JPAUtil.inTransaction(em -> em.merge(school));
     }
 
-    public void delete(String id) {
+    public void delete(int id) {
         JPAUtil.inTransaction(em -> {
             School school = em.find(School.class, id);
             if (school != null) {

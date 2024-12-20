@@ -16,9 +16,8 @@ public class Main {
         Courses courses = new Courses();
 
         boolean mainQuit = false;
-        mainMenu();
         while (!mainQuit) {
-            System.out.println("\nChoose 6 to show alternatives again");
+            mainMenu();
             int mainMenuAction = scanner.nextInt();
             scanner.nextLine();
 
@@ -31,7 +30,7 @@ public class Main {
                     boolean countryQuit = false;
                     while (!countryQuit) {
                         System.out.println("""
-                                 Choose alternative for Country
+                                Choose alternative for Country
                                 0  - Create
                                 1  - Read
                                 2  - Update
@@ -80,10 +79,7 @@ public class Main {
                                 countries.delete(deleteCountry);
                             }
                             //Return to main menu
-                            case 4 -> {
-                                countryQuit = true;
-                                mainMenu();
-                            }
+                            case 4 -> countryQuit = true;
                         }
                     }
                 }
@@ -91,7 +87,7 @@ public class Main {
                     boolean schoolQuit = false;
                     while (!schoolQuit) {
                         System.out.println("""
-                                 Choose alternative for School
+                                Choose alternative for School
                                 0  - Create
                                 1  - Read
                                 2  - Update
@@ -137,12 +133,10 @@ public class Main {
 
                                 Optional<Country> countryOptional = Optional.ofNullable(countries.findByName(updateSchoolCountry));
                                 if (countryOptional.isEmpty()) {
-                                    System.out.println("Country not found: " + updateSchoolCountry);
-                                    break;
+                                    throw new IllegalArgumentException("Country not found: " + updateSchoolCountry);
                                 }
 
                                 Country newCountry = countryOptional.get();
-
                                 schools.update(schoolName, updateSchoolName, newCountry);
                             }
                             //Delete
@@ -152,10 +146,7 @@ public class Main {
                                 schools.delete(deleteSchool);
                             }
                             //Return to main menu
-                            case 4 -> {
-                                schoolQuit = true;
-                                mainMenu();
-                            }
+                            case 4 -> schoolQuit = true;
                         }
                     }
                 }
@@ -163,7 +154,7 @@ public class Main {
                     boolean studentQuit = false;
                     while (!studentQuit) {
                         System.out.println("""
-                                 Choose alternative for Student
+                                Choose alternative for Student
                                 0  - Create
                                 1  - Read
                                 2  - Update
@@ -202,22 +193,23 @@ public class Main {
                                     case 1 -> {
                                         System.out.print("Enter student name: ");
                                         String studentName = scanner.nextLine();
-                                        students.findByName(studentName);
+                                        System.out.println(students.findByName(studentName));
                                     }
                                 }
                             }
                             //Update
                             case 2 -> {
                                 System.out.print("Enter name of student to update: ");
-                                String updateStudentName = scanner.nextLine();
+                                String updateStudent = scanner.nextLine();
                                 System.out.print("Enter new name of student: ");
-
+                                String updateStudentName = scanner.nextLine();
                                 System.out.print("Enter new school name: ");
                                 String updateStudentSchool = scanner.nextLine();
-
                                 System.out.print("Enter new course name: ");
                                 String updateStudentCourse = scanner.nextLine();
-                                students.update(updateStudentName, updateStudentSchool, updateStudentCourse);
+                                System.out.print("Enter new country name: ");
+                                String updateStudentCountry = scanner.nextLine();
+                                students.update(updateStudent, updateStudentName, updateStudentSchool, updateStudentCourse, updateStudentCountry);
                             }
                             //Delete
                             case 3 -> {
@@ -226,10 +218,7 @@ public class Main {
                                 students.delete(deleteStudent);
                             }
                             //Return to main menu
-                            case 4 -> {
-                                studentQuit = true;
-                                mainMenu();
-                            }
+                            case 4 -> studentQuit = true;
                         }
                     }
                 }
@@ -237,7 +226,7 @@ public class Main {
                     boolean educatorQuit = false;
                     while (!educatorQuit) {
                         System.out.println("""
-                                 Choose alternative for Educator
+                                Choose alternative for Educator
                                 0  - Create
                                 1  - Read
                                 2  - Update
@@ -265,7 +254,7 @@ public class Main {
                                 int educatorReadAction = scanner.nextInt();
                                 scanner.nextLine();
                                 switch (educatorReadAction) {
-                                    case 0 -> educators.findAll();
+                                    case 0 -> educators.findAll().forEach(System.out::println);
                                     case 1 -> {
                                         System.out.print("Enter name of educator:");
                                         String findEducator = scanner.nextLine();
@@ -290,10 +279,7 @@ public class Main {
                                 educators.delete(deleteEducator);
                             }
                             //Return to main menu
-                            case 4 -> {
-                                educatorQuit = true;
-                                mainMenu();
-                            }
+                            case 4 -> educatorQuit = true;
                         }
                     }
                 }
@@ -301,7 +287,7 @@ public class Main {
                     boolean courseQuit = false;
                     while (!courseQuit) {
                         System.out.println("""
-                                 Choose alternative for Course
+                                Choose alternative for Course
                                 0  - Create
                                 1  - Read
                                 2  - Update
@@ -316,7 +302,7 @@ public class Main {
                                 System.out.print("Enter course code: ");
                                 String courseCode = scanner.nextLine();
 
-                                System.out.print("Enter name of course:");
+                                System.out.print("Enter name of course: ");
                                 String courseName = scanner.nextLine();
 
                                 System.out.print("Enter educator for course: ");
@@ -337,8 +323,9 @@ public class Main {
                                 scanner.nextLine();
 
                                 switch(readCourseAction){
-                                    case 0 -> courses.findAll();
-                                    case 1 -> {System.out.print("Enter course code: ");
+                                    case 0 -> courses.findAll().forEach(System.out::println);
+                                    case 1 -> {
+                                        System.out.print("Enter course code: ");
                                         String courseCode = scanner.nextLine();
                                         System.out.print(courses.findById(courseCode));
                                     }
@@ -346,7 +333,7 @@ public class Main {
                             }
                             //Update
                             case 2 -> {
-                                System.out.print("Enter old course name: ");
+                                System.out.print("Enter course ID you wish to update: ");
                                 String updateOldCourseName = scanner.nextLine();
 
                                 System.out.print("Enter new course name: ");
@@ -362,15 +349,12 @@ public class Main {
                             }
                             //Delete
                             case 3 -> {
-                                System.out.print("Enter the name of the course to delete: ");
-                                String deleteCourseName = scanner.nextLine();
-                                courses.delete(deleteCourseName);
+                                System.out.print("Enter the course ID to delete: ");
+                                String deleteCourseID = scanner.nextLine();
+                                courses.delete(deleteCourseID);
                             }
                             //Return to main menu
-                            case 4 -> {
-                                courseQuit = true;
-                                mainMenu();
-                            }
+                            case 4 -> courseQuit = true;
                         }
                     }
                 }
@@ -378,7 +362,7 @@ public class Main {
                     boolean statisticsQuit = false;
                     while (!statisticsQuit) {
                         System.out.println("""
-                                 Choose alternative for Statistics
+                                Choose alternative for Statistics
                                 0  - Students per school
                                 1  - Students per country
                                 2  - Students per course
@@ -395,14 +379,10 @@ public class Main {
                             case 3 -> educators.coursesPerEducator().forEach(System.out::println);
                             case 4 -> countries.schoolsPerCountry().forEach(System.out::println);
                             //Return to main menu
-                            case 5 -> {
-                                statisticsQuit = true;
-                                mainMenu();
-                            }
+                            case 5 -> statisticsQuit = true;
                         }
                     }
                 }
-                case 7 -> mainMenu();
             }
         }
     }

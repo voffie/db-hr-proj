@@ -30,7 +30,6 @@ public class Courses {
 
         Optional<Educator> educator = educatorRepo.findByName(educatorName);
         Optional<School> school = schoolRepo.findByName(schoolId);
-//        Optional<Student> student = studentRepo.findByName(studentName);
 
         if (educator.isPresent() && school.isPresent()) {
             Course course = new Course();
@@ -53,19 +52,40 @@ public class Courses {
         return courseRepo.findAll();
     }
 
-    public void update(String id, String newName, String newEducatorName, String newSchoolId) {
-        Optional<Educator> newEducator = educatorRepo.findByName(newEducatorName);
-        Optional<School> newSchool = schoolRepo.findByName(newSchoolId);
+    public void update(String id, String newName, String newEducatorName, String newSchoolName) {
 
-        if (newEducator.isPresent() && newSchool.isPresent()) {
-            courseRepo.update(id, newName, newEducator.get(), newSchool.get());
-        } else {
-            throw new IllegalArgumentException("Invalid educator or school");
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Course ID cannot be null or empty");
         }
+
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("New name cannot be null or empty");
+        }
+
+        if (newEducatorName == null || newEducatorName.isBlank()) {
+            throw new IllegalArgumentException("Educator name cannot be null or empty");
+        }
+
+        if (newSchoolName == null || newSchoolName.isBlank()) {
+            throw new IllegalArgumentException("School name cannot be null or empty");
+        }
+
+        courseRepo.findById(id).ifPresent(course -> {
+            Optional<Educator> newEducator = educatorRepo.findByName(newEducatorName);
+            Optional<School> newSchool = schoolRepo.findByName(newSchoolName);
+
+            if (newEducator.isPresent() && newSchool.isPresent()) {
+            courseRepo.update(course.getId(), newName, newEducator.get(), newSchool.get());
+            }
+        });
     }
 
     public void delete(String id) {
-        courseRepo.delete(id);
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("ID cannot be null or empty");
+        }
+
+        courseRepo.findById(id).ifPresent(course -> courseRepo.delete(course.getId()));
     }
 
     public void addStudentToCourse(String courseId, String studentName) {

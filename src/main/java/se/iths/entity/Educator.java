@@ -53,9 +53,6 @@ public class Educator {
 
     @Override
     public String toString() {
-        return "Educator { " +
-                "id = " + id +
-                ", name = '" + name + "'" +
-                " }";
+        return "id = " + id + ", name = '" + name + "', school = '" + school + "'";
     }
 }

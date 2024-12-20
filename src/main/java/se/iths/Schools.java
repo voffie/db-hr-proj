@@ -31,12 +31,13 @@ public class Schools {
         });
     }
 
-    public void findByName(String name) {
+    public School findByName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
 
-        schoolRepo.findByName(name);
+        Optional<School> school = schoolRepo.findByName(name);
+        return school.orElse(null);
     }
 
     public void update(String name, String newName, Country newCountry) {
@@ -74,7 +75,7 @@ public class Schools {
             new IllegalArgumentException("School with name " + name + " does not exist"));
 
         // Radera skolan
-        schoolRepo.delete(String.valueOf(school));
+        schoolRepo.delete(school.getId());
     }
 
     public List<School> findAll() {

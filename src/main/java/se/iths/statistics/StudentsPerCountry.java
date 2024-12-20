@@ -1,11 +1,8 @@
 package se.iths.statistics;
 
-public record StudentsPerCountry(String name, long count) {
+public record StudentsPerCountry(String countryName, long students) {
     @Override
     public String toString() {
-        return "StudentsPerCountry {" +
-                "name='" + name + '\'' +
-                ", count=" + count +
-                '}';
+        return "Country name = '" + countryName + "', Students=" + students;
     }
 }

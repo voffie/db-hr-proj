@@ -63,7 +63,7 @@ public class CountryRepository {
     public List<SchoolPerCountry> schoolPerCountry() {
         List<SchoolPerCountry> output = new ArrayList<>();
         inTransaction(entityManager -> {
-            output.addAll(entityManager.createQuery("SELECT new se.iths.statistics.StudentsPerCountry(c.name, COUNT(sc.id)) " +
+            output.addAll(entityManager.createQuery("SELECT new se.iths.statistics.SchoolPerCountry(c.name, COUNT(sc.id)) " +
                             "FROM Country c " +
                             "INNER JOIN School sc on c.id = sc.country.id " +
                             "GROUP BY c.name ", SchoolPerCountry.class)
