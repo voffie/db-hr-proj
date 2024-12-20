@@ -25,6 +25,7 @@ public class Schools {
         Optional<Country> country = countryRepo.findByName(newCountry);
         country.ifPresent(entry -> {
             School school = new School();
+            school.setName(name);
             school.setCountry(entry);
             schoolRepo.save(school);
         });

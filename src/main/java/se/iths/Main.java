@@ -43,7 +43,7 @@ public class Main {
                         switch (countryAction) {
                             //Create
                             case 0 -> {
-                                System.out.print("Enter name of educator:");
+                                System.out.print("Enter name of country:");
                                 String saveCountry = scanner.nextLine();
                                 countries.save(saveCountry);
                                 }
@@ -57,7 +57,7 @@ public class Main {
                                 int countryReadAction = scanner.nextInt();
                                 scanner.nextLine();
                                 switch (countryReadAction) {
-                                    case 0 -> countries.findAll();
+                                    case 0 -> countries.findAll().forEach(System.out::println);
                                     case 1 -> {
                                         System.out.print("Enter name of country:");
                                         String findCountry = scanner.nextLine();
@@ -118,11 +118,11 @@ public class Main {
                                 int schoolReadAction = scanner.nextInt();
                                 scanner.nextLine();
                                 switch (schoolReadAction) {
-                                    case 0 -> schools.findAll();
+                                    case 0 -> schools.findAll().forEach(System.out::println);
                                     case 1 -> {
                                         System.out.print("Enter school name: ");
                                         String schoolName = scanner.nextLine();
-                                        schools.findByName(schoolName);
+                                        System.out.println(schools.findByName(schoolName));
                                     }
                                 }
                             }
@@ -194,10 +194,11 @@ public class Main {
                                         0 - Show all students
                                         1 - Search for a student
                                         """);
+
                                 int studentReadAction = scanner.nextInt();
                                 scanner.nextLine();
                                 switch (studentReadAction) {
-                                    case 0 -> students.findAll();
+                                    case 0 -> students.findAll().forEach(System.out::println);
                                     case 1 -> {
                                         System.out.print("Enter student name: ");
                                         String studentName = scanner.nextLine();
@@ -416,7 +417,6 @@ public class Main {
                 4  - Educator
                 5  - Course
                 6  - Statistics
-                7  - Show alternatives again.
                 """);
     }
 }

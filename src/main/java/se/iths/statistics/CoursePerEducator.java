@@ -9,4 +9,3 @@ public record CoursePerEducator(String name, long count) {
                     '}';
         }
     }
-
